@@ -2,12 +2,40 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Customer Segmentation</h1>
+<div class="jumbotron text-center">
+    <h1>Customer Segmentation</h1>
 </div>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-<div class="container">
+
+<div class="row">
+    <div class="col-md-4">
+        <h2><b>Customers</b></h2>
+        <p>
+            This section contains all the database information. <br />
+            It also provides tools such as Edit, <br />
+            Details and Delete.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2><b>Statistics</b></h2>
+        <p>
+            On the statistics page you can view graphs <br />
+            about our data, and the correlations <br />
+            between data.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2><b>Predictions</b></h2>
+        <p>
+            You are also able to input custom data such as <br />
+            age and annual income, and our algorithm <br />
+            will predict your spending score.
+        </p>
+    </div>
+</div>
+
+@*<div class="container">
     <div class="col-lg-4 col-md-12 mb-4 p-5">
         <div class="panel panel-info">
             <div class="panel-heading"><center><h4><b>Customers</b></h4></center></div>
@@ -26,4 +54,4 @@
             <div class="panel-body">Panel Content</div>
         </div>
     </div>
-</div>
+</div>*@
