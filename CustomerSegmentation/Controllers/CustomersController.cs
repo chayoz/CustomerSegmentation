@@ -145,6 +145,8 @@ namespace CustomerSegmentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+
         private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.CustomerID == id);

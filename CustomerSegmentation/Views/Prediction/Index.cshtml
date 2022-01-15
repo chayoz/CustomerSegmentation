@@ -3,5 +3,31 @@
     ViewData["Title"] = "Index";
 }
 
+<style>
+    input {
+        border-radius: 8px;
+        background-color: aliceblue;
+    }
+
+    a.nav-link:hover {
+        background-color: lightgray;
+        opacity: 0.7;
+        border-radius: 20px;
+    }
+</style>
 <h1>Prediction Page</h1>
+<br />
+<hr />
+
+<form action="/action_page.php">
+    <h5>Enter Customer Data</h5>
+    <label for="fname">Gender:</label><br>
+    <input type="text" id="fname" name="fname" value=""><br>
+    <label for="lname">Age:</label><br>
+    <input type="text" id="lname" name="lname" value=""><br>
+    <label for="lname">Annual Income:</label><br>
+    <input type="text" id="lname" name="lname" value=""><br><br>
+
+    <input type="submit" value="Submit">
+</form>
 

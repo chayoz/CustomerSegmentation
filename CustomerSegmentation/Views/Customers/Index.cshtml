@@ -3,11 +3,17 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
+<style>
+    a.nav-link:hover {
+        background-color: lightgray;
+        opacity: 0.7;
+        border-radius: 20px;
+    }
+</style>
+<h1>Customer Data</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Customer</a>
 </p>
 <table class="table" style="border: 1px solid black">
     <thead>
