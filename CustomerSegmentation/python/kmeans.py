@@ -3,7 +3,7 @@ import pyodbc
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
 from sklearn.metrics import confusion_matrix
 from validate import *
@@ -31,46 +31,49 @@ while row:
     id.append(row[4])
     row = cursor.fetchone()
 
-scaler = StandardScaler()
+df = pd.DataFrame(list(zip(age,gender,annualincome,spendingscore)),index = id, columns=['Age','Gender','AnnualIncome','SpendingScore'])
+df['Gender'] = pd.factorize(df['Gender'])[0]
 
-df = pd.DataFrame(list(zip(age,annualincome,spendingscore)),index = id, columns=['Age','AnnualIncome','SpendingScore'])
-
-
+#Scale data
+scaler = MinMaxScaler()
 df_scaled = scaler.fit_transform(df.to_numpy())
+df_scaled = pd.DataFrame(df_scaled, columns=['Age','Gender','AnnualIncome','SpendingScore'])
 
-splited = np.vsplit(df_scaled,4)
-#print(splited[3].size)
-#print(splited[3])
-
-X_test = pd.DataFrame(splited[3], columns=['Age','AnnualIncome','SpendingScore'])
-df_scaled = pd.DataFrame(df_scaled, columns=['Age','AnnualIncome','SpendingScore'])
-
-#print(df_scaled)
-
+#Assign data to x and y
 x = df_scaled.drop('SpendingScore', axis=1)
-y = df_scaled['SpendingScore']
+y = df_scaled[['SpendingScore']]
 
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=2)
+#Split data
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=0.3, random_state=0)
 
-# Sum_of_squared_distances = []
-# K = range(1,10)
-# for num_clusters in K :
-#  kmeans = KMeans(n_clusters=num_clusters)
-#  kmeans.fit(X_train)
-#  Sum_of_squared_distances.append(kmeans.inertia_)
-# plt.plot(K,Sum_of_squared_distances,'bx-')
-# plt.xlabel('Values of K') 
-# plt.ylabel('Sum of squared distances/Inertia') 
-# plt.title('Elbow Method For Optimal k')
-# plt.show()
+#Train the algorithm
+model = KMeans(n_clusters=4, random_state=0)
+y_pred = model.fit_predict(X_train)
 
-kmeans = KMeans(n_clusters=3, random_state=2)
-clrs = kmeans.fit(X_train)
+#Prints a plot and shows the appropriate amount of clusters based on our data, using the elbow method
+#show_cl(X_train)
 
-cl_pred = clrs.predict(X_train)
+#Find on which cluster known data belongs, input order: Age, gender, annualincome, spendingscore
+#testingpoints(model.fit(df_scaled), scaler, 44, 1 , 73 , 7)
 
-def predict(a,b):
-    return(clrs.predict([[a,b]]))
+#Print a 3d plot of how well data is distrubuted into the clusters
+#show_accuracy(model,X_train)
 
+scaler = MinMaxScaler()
+scaler.fit(df.drop('SpendingScore', axis=1).to_numpy())
 
-#print_score(clrs, X_test, y_test)
+#Finalized version of the algorithm and ready for predictions
+def predict(a,g,i):
+    if g.lower() == "male":
+        g = 0
+    else:
+        g = 1
+
+    arr = np.array([[a,g,i]])
+    arr = pd.DataFrame(arr, columns=['Age','Gender','AnnualIncome'])
+    dscaled = scaler.transform(arr)
+
+    return model.predict(dscaled)
+
+print(predict(47,"Male", 71))
+print(predict(44,"Female", 73))

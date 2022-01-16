@@ -1,5 +1,9 @@
 ﻿
-function test() {
-    model = CustomerSegmentation.Models.Customer;
-    document.getElementById("test").innerHTML = model => model.CustomerID;
+
+
+function asd(data) {
+    document.getElementById("test").innerHTML = data.length;
 }
+
+
+

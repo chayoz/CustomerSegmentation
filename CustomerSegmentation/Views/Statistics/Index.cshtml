@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    int[] Age = (int[])ViewData["Age"];
 }
 <style>
     a.nav-link:hover {
@@ -11,13 +12,15 @@
     }
 </style>
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="~/js/d3graphs.js"></script>
 <script>
     function test() {
-        var test = 2
-        document.getElementById("test").innerHTML = test;
+        var test = @Html.Raw(Json.Serialize(Age));
+
+        asd(test);
+
      }
 </script>
-
 <h1>Statistics Page</h1>
 <hr />
 <button onclick="test()"> Click </button>
