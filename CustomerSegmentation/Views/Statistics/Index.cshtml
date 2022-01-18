@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<CustomerSegmentation.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Statistics";
     int[] Age = (int[])ViewData["Age"];
+    int[] AnnualIncome = (int[])ViewData["AnnualIncome"];
 }
 <style>
     a.nav-link:hover {
@@ -10,20 +11,177 @@
         opacity: 0.7;
         border-radius: 20px;
     }
+    .float-container {
+        padding: 20px;
+    }
+
+    .float-child {
+        width: 50%;
+        float: left;
+        padding: 20px;
+    }
 </style>
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
 <script src="~/js/d3graphs.js"></script>
 <script>
-    function test() {
-        var test = @Html.Raw(Json.Serialize(Age));
+    function callgraphs() {
+        graph1();
+        graph2();
+        graph3();
+    }
 
-        asd(test);
+    function graph1() {
+        var margin = { top: 30, right: 30, bottom: 70, left: 60 },
+            width = 1000 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
 
-     }
+        var svg = d3.select("#graph1")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        d3.csv("https://raw.githubusercontent.com/chayoz/CustomerData/main/Customer_Data.csv", function (data) {
+            var x = d3.scaleBand()
+                .range([0, width])
+                .domain(data.map(function (d) { return d.Age; }))
+                .padding(0.2);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+            var y = d3.scaleLinear()
+                .domain([0, 150])
+                .range([height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            svg.selectAll("mybar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", function (d) { return x(d.Age); })
+                .attr("y", function (d) { return y(d.AnnualIncome); })
+                .attr("width", x.bandwidth())
+                .attr("height", function (d) { return height - y(d.AnnualIncome); })
+                .attr("fill", "#10A54D")
+        })
+    }
+    function graph2() {
+        var margin = { top: 30, right: 30, bottom: 70, left: 60 },
+            width = 400 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        var svg = d3.select("#graph2")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        d3.csv("https://raw.githubusercontent.com/chayoz/CustomerData/main/Customer_Data.csv", function (data) {
+            var x = d3.scaleBand()
+                .range([0, width])
+                .domain(data.map(function (d) { return d.Gender; }))
+                .padding(0.2);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+            var y = d3.scaleLinear()
+                .domain([0, 150])
+                .range([height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            svg.selectAll("mybar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", function (d) { return x(d.Gender); })
+                .attr("y", function (d) { return y(d.AnnualIncome); })
+                .attr("width", x.bandwidth())
+                .attr("height", function (d) { return height - y(d.AnnualIncome); })
+                .attr("fill", "#319CDD")
+        })
+    }
+    function graph3() {
+        var margin = { top: 30, right: 30, bottom: 70, left: 60 },
+            width = 400 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        var svg = d3.select("#graph3")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        d3.csv("https://raw.githubusercontent.com/chayoz/CustomerData/main/Customer_Data.csv", function (data) {
+            var x = d3.scaleBand()
+                .range([0, width])
+                .domain(data.map(function (d) { return d.Gender; }))
+                .padding(0.2);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+            var y = d3.scaleLinear()
+                .domain([0, 100])
+                .range([height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            svg.selectAll("mybar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", function (d) { return x(d.Gender); })
+                .attr("y", function (d) { return y(d.SpendingScore); })
+                .attr("width", x.bandwidth())
+                .attr("height", function (d) { return height - y(d.SpendingScore); })
+                .attr("fill", "#DD31AE")
+        })
+    }
 </script>
-<h1>Statistics Page</h1>
-<hr />
-<button onclick="test()"> Click </button>
-<div>
-    <p id="test"></p>
-</div>
+<body onload="callgraphs()">
+
+
+    <h1>Statistics Page</h1>
+    <hr />
+    <center><h3>Age vs AnnualIncome</h3></center>
+    <div id="graph1"></div><br /><br />
+    <div class="float-container">
+        <center><h3>Gender vs Annual Income & Spending Score</h3></center>
+        <div class="float-child">
+            <center>
+                <h5>Annual Income</h5><br />
+                <div id="graph2"></div>
+            </center>
+        </div>
+
+        <div class="float-child">
+            <Center>
+                <h5>Spending Score</h5><br />
+                <div id="graph3"></div>
+            </Center>
+        </div>
+
+    </div><br /><br />
+    <div>
+        <p id="test"></p>
+    </div>
+</body>

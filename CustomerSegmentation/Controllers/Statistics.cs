@@ -22,12 +22,13 @@ namespace CustomerSegmentation.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Age"] = ReturnData();
+            ViewData["Age"] = ReturnAge();
+            ViewData["AnnualIncome"] = ReturnAnnualIncome();
 
             return View();
         }
 
-        private int[] ReturnData()
+        private int[] ReturnAge()
         {
             List<int> age = new List<int>();
             foreach (Customer x in customers)
@@ -36,6 +37,17 @@ namespace CustomerSegmentation.Controllers
             }
 
             return age.ToArray();
+        }
+
+        private int[] ReturnAnnualIncome()
+        {
+            List<int> annualincome = new List<int>();
+            foreach (Customer x in customers)
+            {
+                annualincome.Add(x.AnnualIncome);
+            }
+
+            return annualincome.ToArray();
         }
 
     }
