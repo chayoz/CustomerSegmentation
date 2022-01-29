@@ -1,8 +1,8 @@
-﻿
+﻿@using CustomerSegmentation.Controllers;
 @{
     ViewData["Title"] = "Prediction";
+    string info = "13,Male,60";
 }
-
 <style>
     input {
         border-radius: 8px;
@@ -15,19 +15,54 @@
         border-radius: 20px;
     }
 </style>
+<script>
+    function predrun() {
+
+        var age = document.getElementById("age").value;
+        var gender = document.getElementById("gender").value;
+        var income = document.getElementById("income").value;
+
+        var args = { "args": age + "," + gender + "," + income };
+        var jsonData = JSON.stringify(args);
+        console.log(jsonData);
+        @*
+        if (age.length > 0 && gender.length > 0 && income > 0) {
+            @RunCmd.Run(info)
+        } else {
+            document.getElementById("output").innerHTML = "Please fill all the values";
+        }*@
+        fetch('http://localhost:5000/prediction/run', { method: 'post', headers: {'Content-Type': 'application/json'}, body: jsonData})
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").innerHTML = data['success']
+            })
+    
+    }
+</script>
 <h1>Prediction Page</h1>
 <br />
 <hr />
 
-<form action="/action_page.php">
-    <h5>Enter Customer Data</h5>
-    <label for="lname">Age:</label><br>
-    <input type="text" id="lname" name="lname" value=""><br>
-    <label for="fname">Gender:</label><br>
-    <input type="text" id="fname" name="fname" value=""><br>
-    <label for="lname">Annual Income:</label><br>
-    <input type="text" id="lname" name="lname" value=""><br><br>
+<h5>Enter Customer Data</h5>
+<label for="lname">Age:</label>
+<br>
+<input type="text" id="age" value="">
+<br>
+<label for="fname">Gender:</label>
+<br>
+<input type="text" id="gender" value="">
+<br>
+<label for="lname">Annual Income:</label>
+<br>
+<input type="text" id="income" value="">
+<br>
+<br>
+<p>
+    <button onclick="predrun()">Click me</button>
+</p>
 
-    <input type="submit" value="Submit">
-</form>
+
+<p id="output">
+
+</p>
 

@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
-from sklearn.metrics import confusion_matrix
 from validate import *
+import sys
 
 server = '(localdb)\\MSSQLLocalDB'
 database = 'CustomerSegmentationDB'
@@ -73,7 +73,14 @@ def predict(a,g,i):
     arr = pd.DataFrame(arr, columns=['Age','Gender','AnnualIncome'])
     dscaled = scaler.transform(arr)
 
-    return model.predict(dscaled)
+    result = model.predict(dscaled)
+    if result == 3 or result == 0:
+        return "Customer is most likely to have a low spending score"
+    if result == 1 or result == 2:
+        return "Customer is most likely to have an average or high spending score"
 
-print(predict(47,"Male", 71))
-print(predict(44,"Female", 73))
+
+inp = sys.argv[1]
+inp = inp.split(",")
+result = (predict(inp[0],inp[1],inp[2]))
+print(result)

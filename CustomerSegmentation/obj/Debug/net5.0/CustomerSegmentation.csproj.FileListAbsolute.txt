@@ -152,3 +152,4 @@ D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation
 D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation\CustomerSegmentation\obj\Debug\net5.0\Razor\Views\Customers\Index.cshtml.g.cs
 D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation\CustomerSegmentation\obj\Debug\net5.0\Razor\Views\Statistics\Index.cshtml.g.cs
 D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation\CustomerSegmentation\obj\Debug\net5.0\Razor\Views\Prediction\Index.cshtml.g.cs
+D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation\CustomerSegmentation\bin\Debug\net5.0\Twilio.dll
