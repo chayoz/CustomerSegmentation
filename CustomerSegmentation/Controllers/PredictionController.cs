@@ -77,8 +77,4 @@ namespace CustomerSegmentation.Controllers
 
         }
     }
-    public class data
-    {
-        public string args { get; set; }
-    }
 }

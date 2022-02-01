@@ -79,8 +79,8 @@ def predict(a,g,i):
     if result == 1 or result == 2:
         return "Customer is most likely to have an average or high spending score"
 
-
-inp = sys.argv[1]
+#sys.argv[1]
+inp = "29,Female,73"
 inp = inp.split(",")
 result = (predict(inp[0],inp[1],inp[2]))
 print(result)

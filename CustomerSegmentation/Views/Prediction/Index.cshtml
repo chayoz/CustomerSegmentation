@@ -1,7 +1,6 @@
 ﻿@using CustomerSegmentation.Controllers;
 @{
     ViewData["Title"] = "Prediction";
-    string info = "13,Male,60";
 }
 <style>
     input {
@@ -25,18 +24,24 @@
         var args = { "args": age + "," + gender + "," + income };
         var jsonData = JSON.stringify(args);
         console.log(jsonData);
-        @*
+
         if (age.length > 0 && gender.length > 0 && income > 0) {
-            @RunCmd.Run(info)
+            if (gender.toLowerCase() == "male" || gender.toLowerCase() == "female") {
+                document.getElementById("output").innerHTML = "";
+                document.getElementById("pred").innerHTML = "loading...";
+                fetch('http://localhost:5000/prediction/run', { method: 'post', headers: { 'Content-Type': 'application/json' }, body: jsonData })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("pred").innerHTML = "<h3>"+data['success']+"</h3>"
+                    })
+            } else {
+                document.getElementById("pred").innerHTML = "";
+                document.getElementById("output").innerHTML = "Gender must be Male or Female";
+            }
         } else {
+            document.getElementById("pred").innerHTML = "";
             document.getElementById("output").innerHTML = "Please fill all the values";
-        }*@
-        fetch('http://localhost:5000/prediction/run', { method: 'post', headers: {'Content-Type': 'application/json'}, body: jsonData})
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("output").innerHTML = data['success']
-            })
-    
+        }
     }
 </script>
 <h1>Prediction Page</h1>
@@ -60,9 +65,15 @@
 <p>
     <button onclick="predrun()">Click me</button>
 </p>
-
-
-<p id="output">
+<p style="color:red;" id="output">
 
 </p>
+<br /><hr />
+<center>
+    <p id="pred">
+        <h3>
+
+        </h3>
+    </p>
+</center>
 
