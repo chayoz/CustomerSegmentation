@@ -1,2 +1,2 @@
 # CustomerSegmentation
-Assessment001 for Contemporary Problem Analysis
+Commersial application developed with customer sample data from Kaggle
