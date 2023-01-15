@@ -23,7 +23,7 @@ namespace CustomerSegmentation.Data
             List<CustomerDataImport> cdata;
 
             //Read csv file
-            var reader = new StreamReader(@"D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation\Customer_Data.csv");
+            var reader = new StreamReader(@"..\Customer_Data.csv");
             var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
 
             cdata = csv.GetRecords<CustomerDataImport>().ToList();

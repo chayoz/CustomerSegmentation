@@ -16,7 +16,7 @@ namespace CustomerSegmentation
         {
             if(!(args == "test"))
             {
-                string workingDirectory = @"D:\uni\Contemporary problems analysis\Customer Segmentation\CustomerSegmentation\CustomerSegmentation\python";
+                string workingDirectory = @"..\python";
                 var process = new Process
                 {
                     StartInfo = new ProcessStartInfo
